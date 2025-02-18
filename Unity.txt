@@ -1,0 +1,180 @@
+shortcuts:
+
+strg + s = save
+strg + z = undo
+strg + d = duplicate object
+strg + c = copy object/component
+strg + v = paste object/component
+strg + p = start game
+strg + n = new scene
+q = view tool
+w = move tool
+e = rotate tool
+r = scale tool
+t = rect tool
+f = focus on object
+shift + space = maximize selected view (Scene/Game)
+
+
+components:
+
+everything is made up of components, almost all are optional
+transform - on every object, saves position, rotation and scale
+mesh filter - can easily change shapes of an object
+Mesh renderer - makes the object appear, if deactivated its invisible
+(Box) collider - (for box shape objects), hitboxes, makes things collide with others
+Rigidbody - applies physics, gravity, mass, drag; constraints freeze individual parts of the object so they stay the same even when physics are applied
+	drag - air resistance, the higher the more quickly the object will get stopped by air
+shadow - casts hard shadows, e.g. for a button
+
+
+General Info:
+
+You can implement new windows using the 'window' option at the top-right
+
+Hierarchy - on the left, all game objects are there
+
+inspector - on the right when a object selected, shows properties of an object
+
+Console - Debug Messages and Error Messages will be displayed here
+
+materials - give objects texture or color
+	smoothness - the higher, the more light will bounce of it
+
+Physic Materials - can take or add friction (at default theres always some friction)
+
+scenes - the levels
+
+in the inspector next to the name and activity, you can select an icon
+
+you can change the perspective of the scene viewer by using the orientation in the top right corner
+
+you can disable environmental stuff like sky box by clicking the environment button next to the audio button
+
+you can adjust snap settings in the top snap increment and make the objects snap to the grid using strg and moving them
+
+you can enter 2d mode (e.g. to work on UI) by clicking the 2D button on the top right 
+
+using strg you can adjust parameters like scale or position more controlled
+
+you can adjust values while playing but they wont be saved afterwards
+
+skybox can be changed in camera settings (components)
+
+lighting/rendering options like fog can be changed in the lighting window
+
+fixed timestep in time in project settings should be changed to 0.01 to decrease missing collision
+
+Put scripts onto objects by dragging from project overview to hierarchy, or through add component > scripts > scriptname.cs
+
+
+When you drag an object onto another, it becomes its child object and is panned to it (both objects move together)
+when you drag an object into the project overview, it becomes a prefab
+
+Prefab:
+easy to place multiple
+if settings get changed in the prefab all of the objects that are made from the prefab also adjust
+can also change permeters of one of the objects inside the inspector
+if an object made from a prefab has individual changes there will be a blue line next to it in the hierarchy
+
+
+Scripts:
+
+when created they already have starter content
+declaring variables with the public keyword creates a slot in the inspector where you can drag/enter parameters into
+variables can be used in cases where you dont want one specific value
+parameters are entered into the parenthenses ()
+for better collision detection, in the inspector in rigidbody select collision detection to continous
+you can make a variable basically out of every component type there is (rigidbody, transform, GameObject)
+functions are only visible for others if they are explicitly called public, otherwise theyre private
+
+two / make a comment. //Comment
+one = sets a variable, two == checks if a variable is the same as another value
+!=|is not
+
+Debug.Log() - to write Debug messages, function
+Time.deltaTime - is the amount of seconds since the pc drew the last frame, variable
+Input.GetKey() - checks if the selected key was pressed, function
+GetComponent<>() - checks for the component
+transform - when transform in lower letters is used, it always referres to the transform of the object
+collisionInfo - gives info about a collision
+----.enabled - can be used to turn on and off scripts or components
+ForceMode - there are multiple ways force can be applied: VelocityChange, Acceleration, Force and Impulse
+player.position - can be used to locate the players position
+.ToString() - add this at the end of variables to convert them into a string, add a 0 in the parentheses to only use whole numbers when converting a float
+FindObjectOfType<>() - searches for an object of a specific type, e.g. you could access a script of the object with a '.' and the name of the script you want to access
+SceneManager.LoadScene() - loads a scene
+SceneManager.GetActiveScene().name - stores name of currently active scene
+SceneManager.GetActiveScene().buildIndex - stores build index of currently active scene (important for loading next level without knowing name of current nor next level)
+Invoke() - calls a function with a delay, ("functionName", delayTime)
+.SetActive - can activate and deactivate a gameObject, only works with a gameObject assigned to the variable
+Application.Quit() - closes the application
+
+collisionInfo.collider.name - the name of the object you collided with
+collisionInfo.collider.tag - the tag of the object you collided with
+OnCollisionEnter(Collision collisionInfo) - inside of OnCollisionEnter this tells the script that you want info about the Collision and then you name the variable with the infos stored in it
+SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); - basic script to load the next scene in the build
+
+Using UnityEngine; - always has to be there to access the engine
+Using UnityEngine.UI; - enables UI functions
+Using UnityEngine.SceneManagement; - used when loading a different scene or reload active scene
+
+Start() - gets called when the program is started
+Update() - gets called every frame, can depend on speed of pc
+FixedUpdate() - use instead of Update(), when using physics
+OnCollisionEnter() - will be called when object collides with something
+OnTriggerEnter() - will be called when an object collides with the Trigger, only works when 'Is Trigger' on Box Collider is enabled
+OnApplicationQuit() - will be called when the application is closed
+
+Datatypes:
+int - whole number
+string - text, set in ""
+float - decimal number (8 decimal places)
+double - decimal number (16 decimal places)
+bool - true or false
+Vector3 - stores 3 floats, useful for position data (x, y, z)
+
+Grouping parameters:
+Tag - Groups objects together, is set at the top of the inspector
+empty - you can create empty objects to put a group of objects into if theyre duplicated
+Layers - you can add a Layer parameter to an object and disable it in the top right ('Layers') dropdown menu, this way you cant accidentally click on it in the scene while editing other stuff
+
+
+UI:
+
+you can create a text in the hierarchy
+to avoid text dissapearing if Font is too big, set horizontal and vertical overflow to Overflow
+in canvas select pixel perfect to make the UI look sharper
+You can premake a full screen like a 'level complete' screen and disable it, then code to turn it on automatically after a function was called
+
+text - you can enter and display text in a 2D way
+panel - a panel is a big blank picture, most of the times it covers the entire screen
+canvas - the canvas is where you can put your text into
+button - a button is a small interface that when you press calls a function accordingly
+
+
+GameManager:
+
+uses - start and stop a game, restart a game, display UI on the screen, gameover screen, transition to other menus
+
+You always have to add new scenes to the build in the build settings
+
+to make a end/next level trigger create a cube and deactivate the mesh renderer component to make it invisible
+check 'Is Trigger' in the box collider options
+
+
+Animation:
+
+Select 'Animation' from the Windows
+if you dont want an animation to automatically loop when its over, uncheck loop time in the animation clip in the animation folder
+
+while record button is red in animation tab, every change will be recorded for the animation
+every change while recording will be saved as a key point at the according time stamp
+
+you can also add events at a selected time stamp using the rectangle looking button at the right of the left interface
+these events can call in scripts, e.g. for loading a new level, when the animation reaches that time stamp the function is automatically called
+
+Animation (Window) - has a timeline where you can save movements and turn them into animations
+
+Animator - responsible for playing animations and transitioning inbetween
+
